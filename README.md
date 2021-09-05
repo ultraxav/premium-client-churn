@@ -4,11 +4,27 @@ The main focus of this project is to apply state-of-the-art machine learning tec
 
 The data used is an extract of primium clients from a bank, that may o may not churn.
 
-**This is a living document!**
+Technologies considered:
 
-## Let's get started!
+* Kedro - https://kedro.readthedocs.io/en/0.17.4/
 
-In this section will be describes the steps to follow to excecute the projects pipelines:
+> Kedro is an open-source Python framework for creating reproducible, maintainable and modular data science code. It borrows concepts from software engineering best-practice and applies them to machine-learning code; applied concepts include modularity, separation of concerns and versioning.
+
+* MLFlow - https://www.mlflow.org/docs/latest/index.htm
+
+> MLflow is an open source platform for managing the end-to-end machine learning lifecycle. It tackles four primary functions of Tracking experiments, Packaging ML code, Managing and deploying models, and Providing a central model store. For this project an implementation of MLFlow in Kedro - https://kedro-mlflow.readthedocs.io/en/0.7.4/
+
+* Kedro Viz - https://github.com/quantumblacklabs/kedro-viz
+
+> Kedro-Viz is an interactive development tool for building data science pipelines with Kedro, that features complete visualisation of a Kedro project and its pipelines.
+
+* Pre-Commit - https://pre-commit.com/
+
+> A framework for managing and maintaining multi-language pre-commit hooks. Git hook scripts are useful for identifying simple issues before submission to code review. We run our hooks on every commit to automatically point out issues in code such as missing semicolons, trailing whitespace, and debug statements. By pointing these issues out before code review, this allows a code reviewer to focus on the architecture of a change while not wasting time with trivial style nitpicks.
+
+## Now... Let's get started!
+
+In this section will be describes the steps to follow to set up your environment and excecute the project pipelines:
 
 1) First of all we strongly recommend creating a virtual environment with Python >=3.6, <3.9:
 
@@ -16,7 +32,7 @@ In this section will be describes the steps to follow to excecute the projects p
 python -m venv "name of your choosing"
 ```
 
-2) Install Kedro version 0.17.4: https://kedro.readthedocs.io/en/0.17.4/
+2) Install Kedro 0.17.4: 
 
 ```
 pip install kedro==0.17.4
@@ -30,13 +46,13 @@ kedro build-reqs
 kedro install
 ```
 
-4) Initialize mlflow tracking integration into kedro: https://kedro-mlflow.readthedocs.io/en/0.7.4/
+4) Initialize mlflow tracking integration into kedro: 
 
 ```
 kedro mlflow init
 ```
 
-5) Installing pre-commit hook for code formating: https://pre-commit.com/
+5) Installing pre-commit hook for code formating: 
 
 ```
 pre-commit install
