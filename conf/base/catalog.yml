@@ -6,3 +6,8 @@
 raw_data:
   type: pandas.ParquetDataSet
   filepath: data/01_raw/raw_data.parquet
+
+intermediate_data:
+  type: pandas.ParquetDataSet
+  filepath: data/02_intermediate/intermediate_data.parquet
+  
