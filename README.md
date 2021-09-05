@@ -1,5 +1,47 @@
 # Premium Client Churn
 
+The main focus of this project is to apply state-of-the-art machine learning techniques and good practices.
+
+The data used is an extract of primium clients from a bank, that may o may not churn.
+
+**This is a living document!**
+
+## Let's get started!
+
+In this section will be describes the steps to follow to excecute the projects pipelines:
+
+1) First of all we strongly recommend creating a virtual environment with Python >=3.6, <3.9:
+
+```
+python -m venv "name of your choosing"
+```
+
+2) Install Kedro version 0.17.4: https://kedro.readthedocs.io/en/0.17.4/
+
+```
+pip install kedro==0.17.4
+```
+
+3) In the root of the project build the specific requirements for your excecution environment and install them:
+
+```
+kedro build-reqs
+
+kedro install
+```
+
+4) Initialize mlflow tracking integration into kedro: https://kedro-mlflow.readthedocs.io/en/0.7.4/
+
+```
+kedro mlflow init
+```
+
+5) Installing pre-commit hook for code formating: https://pre-commit.com/
+
+```
+pre-commit install
+```
+
 ## Overview
 
 This is your new Kedro project, which was generated using `Kedro 0.17.4`.
