@@ -28,7 +28,7 @@
 #
 # * Preserving columns data types
 # * Read/Write speeds
-# * Starage Space
+# * Storage Space
 #
 # The inspiration for this notebook came from: For more details read it!.
 #
