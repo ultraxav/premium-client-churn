@@ -5,4 +5,4 @@
 
 raw_data:
   type: pandas.ParquetDataSet
-  filepath: data/01_raw/paquete_premium.parquet
+  filepath: data/01_raw/raw_data.parquet
