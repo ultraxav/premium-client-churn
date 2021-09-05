@@ -26,19 +26,19 @@ Technologies considered:
 
 In this section will be describes the steps to follow to set up your environment and excecute the project pipelines:
 
-1) First of all we strongly recommend creating a virtual environment with Python >=3.6, <3.9:
+1. First of all we strongly recommend creating a virtual environment with Python >=3.6, <3.9:
 
 ```
 python -m venv "name of your choosing"
 ```
 
-2) Install Kedro 0.17.4: 
+2. Install Kedro 0.17.4: 
 
 ```
 pip install kedro==0.17.4
 ```
 
-3) In the root of the project build the specific requirements for your excecution environment and install them:
+3. In the root of the project build the specific requirements for your excecution environment and install them:
 
 ```
 kedro build-reqs
@@ -46,13 +46,13 @@ kedro build-reqs
 kedro install
 ```
 
-4) Initialize mlflow tracking integration into kedro: 
+4. Initialize mlflow tracking integration into kedro: 
 
 ```
 kedro mlflow init
 ```
 
-5) Installing pre-commit hook for code formating: 
+5. Installing pre-commit hook for code formating: 
 
 ```
 pre-commit install
