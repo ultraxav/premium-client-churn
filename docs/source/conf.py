@@ -55,8 +55,8 @@ from premium_client_churn import __version__ as release
 # -- Project information -----------------------------------------------------
 
 project = "premium_client_churn"
-copyright = "2021, QuantumBlack Visual Analytics Limited"
-author = "QuantumBlack"
+copyright = "2021, Maximum Overfitters"
+author = "Maximum Overfitters"
 
 # The short X.Y version.
 version = re.match(r"^([0-9]+\.[0-9]+).*", release).group(1)

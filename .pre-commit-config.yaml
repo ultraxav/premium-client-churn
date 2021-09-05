@@ -5,7 +5,7 @@ repos:
     - id: trailing-whitespace
       types: [python]
 -   repo: https://github.com/psf/black
-    rev: 20.8b1
+    rev: 21.8b0
     hooks:
     - id: black
       name: black
