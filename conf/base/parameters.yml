@@ -1,0 +1,26 @@
+# Parameters for the pipelines
+
+clean_data:
+  target_class: BAJA+2
+  bool_to_cat:
+    - active_quarter
+    - cliente_vip
+    - internet
+    - tpaquete2
+    - tpaquete3
+    - tcuentas
+    - tcallcenter
+    - thomebanking
+    - Master_delinquency
+    - Visa_delinquency
+    - clase_ternaria
+  day_to_year:
+    - Master_Fvencimiento
+    - Master_Finiciomora
+    - Master_fultimo_cierre
+    - Master_fechaalta
+    - Visa_Fvencimiento
+    - Visa_Finiciomora
+    - Visa_fultimo_cierre
+    - Visa_fechaalta
+  # month_to_year: cliente_antiguedad

@@ -8,7 +8,7 @@ def create_pipeline(**kwargs):
         [
             node(
                 clean_data,
-                inputs=['raw_data', 'params:raw_data'],
+                inputs=['raw_data', 'params:clean_data'],
                 outputs='intermediate_data',
                 name='clean_data_node',
             )

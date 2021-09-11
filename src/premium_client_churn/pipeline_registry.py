@@ -31,6 +31,8 @@
 from typing import Dict
 from kedro.pipeline import Pipeline
 
+# from kedro_mlflow.pipeline import pipeline_ml_factory
+
 # pipelines
 from premium_client_churn.pipelines import data_engineering as de
 from premium_client_churn.pipelines import data_science as ds
@@ -48,13 +50,24 @@ def register_pipelines() -> Dict[str, Pipeline]:
     data_science_pipeline = ds.create_pipeline()
     reporting_pipeline = rp.create_pipeline()
 
-    training_pipeline = (
-        data_engineering_pipeline + data_science_pipeline + reporting_pipeline
-    )
+    # ml_pipeline = (
+    #     data_engineering_pipeline + data_science_pipeline + reporting_pipeline
+    # )
+
+    # inference_pipeline = ml_pipeline.only_nodes_with_tags('inference')
+
+    # training_pipeline = pipeline_ml_factory(
+    #     training=ml_pipeline.only_nodes_with_tags('training'),
+    #     inference=inference_pipeline,
+    #     input_name='feat_data',
+    #     model_name='model',
+    #     model_signature=None,
+    # )
 
     return {
         'data_engineering': data_engineering_pipeline,
         'data_science': data_science_pipeline,
         'reporting': reporting_pipeline,
-        'training': training_pipeline,
+        # 'training': training_pipeline,
+        # 'inference': inference_pipeline,
     }
