@@ -160,3 +160,6 @@ venv.bak/
 
 # requirements.txt
 src/requirements.txt
+
+# mlruns
+/mlruns
