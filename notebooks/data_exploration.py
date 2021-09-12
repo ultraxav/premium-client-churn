@@ -25,7 +25,26 @@ pd.set_option("display.max_columns", None)
 # %%time
 data = catalog.load('primary_data')
 print(data.shape)
-data
+data.head(30)
 
 # %%
-data.loc[data['foto_mes'] == 201701, 'ccajas_consultas']
+list(data.columns[120:])  #'mtarjeta_visa_debitos_automaticos'
+
+# %%
+median_vector = data.pivot_table(
+    index='foto_mes', values='mcaja_ahorro', aggfunc='median'
+).sort_index()
+
+# %%
+median_vector.columns = ['correction']
+median_vector
+
+# %%
+median_vector = data[['foto_mes']].merge(median_vector, on='foto_mes')
+median_vector
+
+# %%
+data = data.sort_values(by=['numero_de_cliente', 'foto_mes']).reset_index(drop=True)
+
+# %%
+data.groupby('numero_de_cliente').shift(3)

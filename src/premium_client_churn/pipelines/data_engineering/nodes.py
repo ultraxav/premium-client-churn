@@ -86,10 +86,28 @@ def clean_data(data: pd.DataFrame, params: Dict[str, Any]) -> pd.DataFrame:
 
 def feat_engineering(data: pd.DataFrame, params: Dict[str, Any]) -> pd.DataFrame:
     """
-    Node for automatic feature engineering
+    Node for feature engineering
     """
-    # Categories
-    for i in params['bool_to_cat']:
-        data[i] = data[i].astype('category')
+    # Calculates de median of mcaja_ahorro for every month
+    median_vector = data.pivot_table(
+        index='foto_mes', values='mcaja_ahorro', aggfunc='median'
+    ).sort_index()
+    median_vector = data[['foto_mes']].merge(median_vector, on='foto_mes')
+    median_vector = median_vector['mcaja_ahorro']
+
+    # Applies the median vector to all pesos columns to eliminate the effect of inflation
+    for i in params['cols_pesos']:
+        data[i] = data[i] / median_vector
+
+    # Applies lags to historic columns
+    data = data.sort_values(by=['numero_de_cliente', 'foto_mes']).reset_index(drop=True)
+
+    lag_data = data.groupby('numero_de_cliente').shift(params['lag_qty'])
+
+    lag_data = lag_data[params['cols_to_lag']]
+
+    lag_data = lag_data.add_prefix('lag_')
+
+    data = pd.concat([data, lag_data], axis=1)
 
     return data
