@@ -1,6 +1,6 @@
 # Parameters for the pipelines
 
-clean_data:
+data_engineering:
   target_class: BAJA+2
   bool_to_cat:
     - active_quarter
@@ -24,3 +24,10 @@ clean_data:
     - Visa_fultimo_cierre
     - Visa_fechaalta
   # month_to_year: cliente_antiguedad
+
+experiment_dates:
+  train_from: 201709
+  train_to: 201908
+  valid: 201910
+  test: 201912
+  to_leader: 202002
