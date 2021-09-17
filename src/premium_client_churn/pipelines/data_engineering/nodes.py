@@ -7,7 +7,14 @@ from typing import Any, Dict
 # nodes
 def clean_data(data: pd.DataFrame, params: Dict[str, Any]) -> pd.DataFrame:
     """
-    Node for fixing broken data, transforming time columns into years and normalizing the target
+    Node for fixing broken data, transforming time columns into years and normalizing the target.
+
+    Args:
+        data: Raw data
+        params: Params to normalize target class
+
+    Returns:
+        data: Clean data
     """
     # Normalizing target class
     data['clase_ternaria'] = (
@@ -86,14 +93,52 @@ def clean_data(data: pd.DataFrame, params: Dict[str, Any]) -> pd.DataFrame:
 
 def feat_engineering(data: pd.DataFrame, params: Dict[str, Any]) -> pd.DataFrame:
     """
-    Node for feature engineering
+    Node for feature engineering.
+
+    Args:
+        data: Clean data
+        params: Params to make feature engineering
+
+    Returns:
+        data: Feature data
     """
-    # Calculates de median of mcaja_ahorro for every month
-    median_vector = data.pivot_table(
-        index='foto_mes', values='mcaja_ahorro', aggfunc='median'
-    ).sort_index()
-    median_vector = data[['foto_mes']].merge(median_vector, on='foto_mes')
-    median_vector = median_vector['mcaja_ahorro']
+    # Calculates de median of mpayroll for every month
+    sueldos = data[['foto_mes', 'mpayroll']]
+
+    sueldos = sueldos[sueldos['mpayroll'] != 0].reset_index(drop=True)
+    sueldos['foto_mes'] = sueldos.loc[:, 'foto_mes'].astype('str')
+
+    sueldos_ireg = sueldos[
+        (sueldos['foto_mes'].str.contains('06'))
+        | (sueldos['foto_mes'].str.contains('12'))
+    ]
+    sueldos_ireg['foto_mes'] = sueldos_ireg.loc[:, 'foto_mes'].astype('int').copy()
+
+    sueldos_reg = sueldos[
+        ~(
+            (sueldos['foto_mes'].str.contains('06'))
+            | (sueldos['foto_mes'].str.contains('12'))
+        )
+    ]
+    sueldos_reg['foto_mes'] = sueldos_reg.loc[:, 'foto_mes'].astype('int').copy()
+
+    agg_funcs = {'month_median': ('mpayroll', 'median')}
+
+    normalizers_ireg = sueldos_ireg.groupby('foto_mes').agg(**agg_funcs)
+    normalizers_ireg['month_median'] = normalizers_ireg['month_median'].shift(1)
+
+    normalizers_reg = sueldos_reg.groupby('foto_mes').agg(**agg_funcs)
+    normalizers_reg['month_median'] = normalizers_reg['month_median'].shift(1)
+
+    normalizers = pd.concat([normalizers_reg, normalizers_ireg]).sort_index()
+
+    sueldos['foto_mes'] = sueldos.loc[:, 'foto_mes'].astype('int')
+
+    sueldos = sueldos.merge(normalizers, on='foto_mes', how='left')
+
+    median_vector = sueldos['month_median']
+
+    print(median_vector)
 
     # Applies the median vector to all pesos columns to eliminate the effect of inflation
     for i in params['cols_pesos']:
