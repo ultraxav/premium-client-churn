@@ -4,7 +4,7 @@
 
 The focus of this project is to develop a reference implementation example of how to train and register Machine Learning (ML) models intended for predicting client churn, all of this applying the latest machine learning techniques and good practices.
 
-The data, which is not provided as part of this release and thus this implementation is only intended to serve as an example, is an extract of anonymized premium clients from a financial institution.
+The data, which is not provided as part of this release and thus this implementation is only intended to serve as an example, is an extract of anonymized premium clients from a financial institution. Source: https://www.kaggle.com/c/uamds2020ldi1f2
 
 This implementation is built in python and leverages open-source libraries kedro, scikit-learn, MLFlow, and others.
 
