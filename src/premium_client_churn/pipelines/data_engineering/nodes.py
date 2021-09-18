@@ -105,7 +105,7 @@ def feat_engineering(data: pd.DataFrame, params: Dict[str, Any]) -> pd.DataFrame
     # Calculates de median of mpayroll for every month
     sueldos = data[['foto_mes', 'mpayroll']]
 
-    sueldos = sueldos[sueldos['mpayroll'] != 0].reset_index(drop=True)
+    sueldos = sueldos[sueldos['mpayroll'] > 0].reset_index(drop=True)
     sueldos['foto_mes'] = sueldos.loc[:, 'foto_mes'].astype('str')
 
     sueldos_ireg = sueldos[
@@ -132,13 +132,9 @@ def feat_engineering(data: pd.DataFrame, params: Dict[str, Any]) -> pd.DataFrame
 
     normalizers = pd.concat([normalizers_reg, normalizers_ireg]).sort_index()
 
-    sueldos['foto_mes'] = sueldos.loc[:, 'foto_mes'].astype('int')
+    median_vector = data[['foto_mes']].merge(normalizers, on='foto_mes', how='left')
 
-    sueldos = sueldos.merge(normalizers, on='foto_mes', how='left')
-
-    median_vector = sueldos['month_median']
-
-    print(median_vector)
+    median_vector = median_vector['month_median']
 
     # Applies the median vector to all pesos columns to eliminate the effect of inflation
     for i in params['cols_pesos']:

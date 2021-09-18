@@ -43,7 +43,7 @@ sueldos = data[['foto_mes', 'mpayroll']]
 sueldos
 
 # %%
-sueldos = sueldos[sueldos['mpayroll'] != 0].reset_index(drop=True)
+sueldos = sueldos[sueldos['mpayroll'] > 0].reset_index(drop=True)
 sueldos
 
 # %% [markdown]
@@ -105,7 +105,7 @@ sueldos = data[['foto_mes', 'mpayroll']]
 sueldos
 
 # %%
-sueldos = sueldos[sueldos['mpayroll'] != 0].reset_index(drop=True)
+sueldos = sueldos[sueldos['mpayroll'] > 0].reset_index(drop=True)
 sueldos['foto_mes'] = sueldos.loc[:, 'foto_mes'].astype('str')
 sueldos
 
@@ -187,3 +187,5 @@ summary
 
 # %%
 summary.describe()
+
+# %%
