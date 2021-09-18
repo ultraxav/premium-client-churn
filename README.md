@@ -1,5 +1,7 @@
 # Premium Client Churn
 
+## Overview
+
 The focus of this project is to is develop a reference implementation example of how to train and register Machine Learning (ML) models intended for predicting client churn, all of this applying state-of-the-art machine learning techniques and good practices.
 
 The data, which is not provided as part of this release and thus this implementation is only intended to serve as an example, is an extract of anonymized premium clients from a financial institution.
@@ -29,6 +31,30 @@ Libraries considered considered:
 > A framework for managing and maintaining multi-language pre-commit hooks. Git hook scripts are useful for identifying simple issues before submission to code review. We run our hooks on every commit to automatically point out issues in code such as missing semicolons, trailing whitespace, and debug statements. By pointing these issues out before code review, this allows a code reviewer to focus on the architecture of a change while not wasting time with trivial style nitpicks.
 
 This implementation provides examples how to build pipelines for data load and save, data engineering, data science, and summarizing. These pipelines enable scalable, repeatable, and maintainable development of ML models.
+
+## Project relevant structure
+
+    ├── conf                           <- Folder used to store configuration files.
+    │   └── README.md                  <- README for developers to configure this project.
+    │
+    ├── data                           <- Data for a particular model
+    │   ├── 01_raw                     <- The original, immutable data dump.
+    │   ├── 02_primary                 <- The cleaned, data set for feature engineering.
+    │   ├── 02_feature                 <- The final, canonical data set for modeling.
+    │   ├── 06_model                   <- Compiled model.
+    │   ├── 07_model_output            <- Model predictions.
+    │   └── 08_reporting               <- Model performance report.
+    │
+    ├── mlruns                         <- Folder for model tracking.
+    │
+    ├── notebooks                      <- Jupyter notebooks.
+    │
+    ├── src                            <- Source code for use in this project.
+    │   ├── premium_client_churn       <- Project source code.
+    │   │   └── pipelines              <- Pipelines for data processing, modeling and reporting.
+    │   └── requirements.in            <- The requirements file for reproducing the analysis environment.
+    │
+    └── README.md                      <- The top-level README for developers using this project.
 
 ## Now... Let's get started!
 
