@@ -224,9 +224,9 @@ data_engineering:
 
 data_science:
   experiment_dates:
-    - 201908 # Walk 1
-    - 201910 # Walk 2
-    - 201912 # Walk 3
-    - 202002 # Leaderboard
+    train: 201909
+    valid: 201911
+    test: 201912
+    leader: 202002
   months_to_train:
     - 12

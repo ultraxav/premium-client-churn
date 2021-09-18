@@ -1,11 +1,17 @@
 # libs
 from kedro.pipeline import Pipeline, node
-from .nodes import train_model, predict
+from .nodes import split_data, train_model, predict
 
 # pipeline
 def create_pipeline(**kwargs):
     return Pipeline(
         [
+            node(
+                split_data,
+                inputs=['feature_data', 'params:data_science'],
+                outputs=['train_data', 'splits'],
+                name='split_data_node',
+            ),
             node(
                 train_model,
                 inputs=['feature_data', 'params:experiment_dates'],

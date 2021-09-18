@@ -1,63 +1,63 @@
 # libs
-import lightgbm as lgb
-import mlflow
-import optuna
-import optuna.integration.lightgbm as lgb_optim
+# import lightgbm as lgb
+# import mlflow
+# import optuna
+# import optuna.integration.lightgbm as lgb_optim
 import pandas as pd
-import warnings
 
-from kedro.framework.session import get_current_session
+# import warnings
+
+# from kedro.framework.session import get_current_session
 from typing import Any, Dict
 
-warnings.filterwarnings('ignore', category=UserWarning)
+# warnings.filterwarnings('ignore', category=UserWarning)
 
 # nodes
-def split_data(
-    header_data: pd.DataFrame, scoring_data: pd.DataFrame, parameters: Dict[str, Any]
-) -> Dict[str, Any]:
-    """Split the data into train and test datasets
+def split_data(data: pd.DataFrame, params: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Subsets the dataset to the months needed for training and predicting
 
     Args:
-        header_data  : Data of given loans
-        scoring_data : Processed credit scoring data of loans
-        parameters   : Parameter to split train/valid data
+        data: Feature data
+        params: Parameters to split train/valid data
 
     Returns:
-        Dict : Train/Test data for model training
+        data: Data to train and predict
+        splits: Dictionary of the indices for train, valid, test, and predict
 
     """
-    header_data = header_data[['expiry_date', 'score_id', 'delinquency']].copy()
+    # train
+    train_to = params.experiment_dates.train
 
-    header_data['expiry_date'] = pd.to_datetime(header_data['expiry_date'])
+    start_from = pd.Series(sorted(data['foto_mes'].unique()))
 
-    header_data['month'] = header_data['expiry_date'].dt.strftime('%Y-%m')
+    start_from = start_from[start_from <= train_to]
 
-    scoring_data = scoring_data.rename(columns={'id': 'score_id'})
+    start_from = int(start_from[-params.months_to_train :][:1])
 
-    scoring_data = scoring_data.drop_duplicates(subset='score_id')
+    train_dates = (data['foto_mes'] >= start_from) & (data['foto_mes'] <= train_to)
 
-    primary_data = header_data.merge(
-        scoring_data, on='score_id', suffixes=('_header', '_scoring')
-    )
+    # valid
+    valid_dates = data['foto_mes'] == params.experiment_dates.valid
 
-    train = primary_data[primary_data['month'] < parameters['month']]
-    test = primary_data[primary_data['month'] >= parameters['month']]
+    # test
+    test_dates = data['foto_mes'] == params.experiment_dates.test
 
-    # Drop lean_created_at y month
-    train = train.drop(columns=['expiry_date', 'score_id', 'month'])
-    test = test.drop(columns=['expiry_date', 'score_id', 'month'])
+    # predict
+    end_in = params.experiment_dates.leader
+    predict_dates = data['foto_mes'] == end_in
 
-    train_data_x = train.drop(columns=['delinquency'])
-    train_data_y = train['delinquency']
-    test_data_x = test.drop(columns=['delinquency'])
-    test_data_y = test['delinquency']
+    # dataset subset
+    data = data[(data['foto_mes'] >= start_from) & (data['foto_mes'] <= end_in)]
 
-    return dict(
-        train_x=train_data_x,
-        train_y=train_data_y,
-        test_x=test_data_x,
-        test_y=test_data_y,
-    )
+    splits = {
+        'train_dates': train_dates,
+        'valid_dates': valid_dates,
+        'test_dates': test_dates,
+        'predict_dates': predict_dates,
+    }
+
+    return data, splits
 
 
 def train_model(
