@@ -230,3 +230,16 @@ data_science:
     leader: 202002
   months_to_train:
     - 12
+  optim:
+    with_optim: False
+    seed: 1234 # Reproducibility seed
+  model_fixed:
+    deterministic: True
+    early_stopping_rounds: 550
+    force_col_wise: True
+    learning_rate: 0.01
+    max_bin: 32
+    metric: auc
+    n_estimators: 5000
+    objective: binary
+    verbose: -1

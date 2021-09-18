@@ -14,3 +14,7 @@ primary_data:
 feature_data:
   type: pandas.ParquetDataSet
   filepath: data/04_feature/feature_data.parquet
+
+trained_model:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/trained_model.pkl

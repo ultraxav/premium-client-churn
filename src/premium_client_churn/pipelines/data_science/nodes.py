@@ -24,7 +24,6 @@ def split_data(data: pd.DataFrame, params: Dict[str, Any]) -> Dict[str, Any]:
     Returns:
         data: Data to train and predict
         splits: Dictionary of the indices for train, valid, test, and predict
-
     """
     # train
     train_to = params.experiment_dates.train
@@ -61,13 +60,9 @@ def split_data(data: pd.DataFrame, params: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def train_model(
-    train_x: pd.DataFrame,
-    train_y: pd.DataFrame,
-    test_x: pd.DataFrame,
-    test_y: pd.DataFrame,
-    BO_params: Dict[str, Any],
-    model_fixed_params: Dict[str, Any],
-    model_optim_params: Dict[str, Any],
+    data: pd.DataFrame,
+    splits: Dict[str, Any],
+    params: Dict[str, Any],
 ) -> Any:
     """Trains the model given some data
 

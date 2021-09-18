@@ -14,13 +14,13 @@ def create_pipeline(**kwargs):
             ),
             node(
                 train_model,
-                inputs=['feature_data', 'params:experiment_dates'],
-                outputs=['trained_model', 'walk_gains', 'model_params'],
+                inputs=['train_data', 'splits', 'params:data_science'],
+                outputs=['trained_model', 'model_params'],
                 name='train_model_node',
             ),
             node(
                 predict,
-                inputs=['feature_data', 'params:experiment_dates', 'trained_model'],
+                inputs=['train_data', 'params:data_science', 'trained_model'],
                 outputs='predictions',
                 name='predict_node',
             ),
