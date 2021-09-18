@@ -222,9 +222,11 @@ data_engineering:
     - Visa_cadelantosefectivo
     - Visa_mpagominimo
 
-experiment_dates:
-  train_from: 201709
-  train_to: 201908
-  valid: 201910
-  test: 201912
-  to_leader: 202002
+data_science:
+  experiment_dates:
+    - 201908 # Walk 1
+    - 201910 # Walk 2
+    - 201912 # Walk 3
+    - 202002 # Leaderboard
+  months_to_train:
+    - 12

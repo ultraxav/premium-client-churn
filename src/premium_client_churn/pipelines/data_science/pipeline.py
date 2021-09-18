@@ -1,28 +1,22 @@
 # libs
 from kedro.pipeline import Pipeline, node
-from .nodes import predict, report_accuracy, train_model
+from .nodes import train_model, predict
 
-# pipelines
+# pipeline
 def create_pipeline(**kwargs):
     return Pipeline(
         [
             node(
                 train_model,
-                ["example_train_x", "example_train_y", "parameters"],
-                "example_model",
-                name="train",
+                inputs=['feature_data', 'params:experiment_dates'],
+                outputs=['trained_model', 'walk_gains', 'model_params'],
+                name='train_model_node',
             ),
             node(
                 predict,
-                dict(model="example_model", test_x="example_test_x"),
-                "example_predictions",
-                name="predict",
-            ),
-            node(
-                report_accuracy,
-                ["example_predictions", "example_test_y"],
-                None,
-                name="report",
+                inputs=['feature_data', 'params:experiment_dates', 'trained_model'],
+                outputs='predictions',
+                name='predict_node',
             ),
         ]
     )
