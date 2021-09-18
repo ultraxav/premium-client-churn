@@ -17,10 +17,9 @@ This modular pipeline cleans the raw data from broken features, normalizes the t
 
 ### `raw_data`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | Input data to process into clean and train sets |
+| Type | Description |
+| ---- | ----------- |
+| `pandas.DataFrame` | Input data to process into clean and train sets |
 
 ### `params:data_engineering`
 
@@ -37,14 +36,12 @@ This modular pipeline cleans the raw data from broken features, normalizes the t
 
 ### `clean_data`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing clean set features |
+| Type | Description |
+| ---- | ----------- |
+| `pandas.DataFrame` | DataFrame containing clean set features |
 
 ### `feature_data`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing train set features |
+| Type | Description |
+| ---- | ----------- |
+| `pandas.DataFrame` | DataFrame containing train set features |
