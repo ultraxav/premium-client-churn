@@ -1,53 +1,50 @@
 # Data Engineering pipeline
 
-> *Note:* This `README.md` was generated using `Kedro 0.17.4` for illustration purposes. Please modify it according to your pipeline structure and contents.
-
 ## Overview
 
-This modular pipeline splits the incoming data into the train and test subsets (`split_data` node)
+This modular pipeline cleans the raw data from broken features, normalizes the target class and applies a simple feature engineering. The pipeline consists:
+
+* `clean_data` node:
+    *  Normalizes the target class.
+    * Clean broken features.
+
+* `feat_engineering` node:
+    * Cancels the effect of inflation.
+    * Calculate lagged values for selected features.
+
 
 ## Pipeline inputs
 
-### `example_iris_data`
+### `raw_data`
 
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.DataFrame` |
-| Description | Input data to split into train and test sets |
+| Description | Input data to process into clean and train sets |
 
-### `params:example_test_data_ratio`
+### `params:data_engineering`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `float` |
-| Description | The split ratio parameter that identifies what percentage of rows goes to the train set |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| target_class | `string` | Class to predict |
+| lag_qty | `int` | How far is the lag to calculate |
+| bool_to_cat | `list` | Features to cast as category |
+| day_to_year | `list` | Features to convert to year |
+| cols_pesos | `list` | Features in pesos |
+| cols_to_lag | `list` | Features to apply lags |
 
 ## Pipeline outputs
 
-### `example_train_x`
+### `clean_data`
+
+|      |                    |
+| ---- | ------------------ |
+| Type | `pandas.DataFrame` |
+| Description | DataFrame containing clean set features |
+
+### `feature_data`
 
 |      |                    |
 | ---- | ------------------ |
 | Type | `pandas.DataFrame` |
 | Description | DataFrame containing train set features |
-
-### `example_train_y`
-
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing train set one-hot encoded target variable |
-
-### `example_test_x`
-
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing test set features |
-
-### `example_test_y`
-
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing test set one-hot encoded target variable |
