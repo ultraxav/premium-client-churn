@@ -1,14 +1,20 @@
 # Premium Client Churn
 
-The main focus of this project is to apply state-of-the-art machine learning techniques and good practices.
+The focus of this project is to is develop a reference implementation example of how to train and register Machine Learning (ML) models intended for predicting client churn, all of this applying state-of-the-art machine learning techniques and good practices.
 
-The data used is an extract of primium clients from a bank, that may o may not churn.
+The data, which is not provided as part of this release and thus this implementation is only intended to serve as an example, is an extract of anonymized premium clients from a financial institution.
 
-Technologies considered:
+This implementation is built in python and leverages open-source libraries kedro, scikit-learn, MLFlow, and others.
+
+Libraries considered considered:
 
 * Kedro - https://kedro.readthedocs.io/en/0.17.4/
 
 > Kedro is an open-source Python framework for creating reproducible, maintainable and modular data science code. It borrows concepts from software engineering best-practice and applies them to machine-learning code; applied concepts include modularity, separation of concerns and versioning.
+
+* scikit-learn - https://scikit-learn.org/0.24/
+
+> Simple and efficient tools for predictive data analysis, accessible to everybody, and reusable in various contexts, built on NumPy, SciPy, and matplotlib.
 
 * MLFlow - https://www.mlflow.org/docs/latest/index.html
 
@@ -21,6 +27,8 @@ Technologies considered:
 * Pre-Commit - https://pre-commit.com/
 
 > A framework for managing and maintaining multi-language pre-commit hooks. Git hook scripts are useful for identifying simple issues before submission to code review. We run our hooks on every commit to automatically point out issues in code such as missing semicolons, trailing whitespace, and debug statements. By pointing these issues out before code review, this allows a code reviewer to focus on the architecture of a change while not wasting time with trivial style nitpicks.
+
+This implementation provides examples how to build pipelines for data load and save, data engineering, data science, and summarizing. These pipelines enable scalable, repeatable, and maintainable development of ML models.
 
 ## Now... Let's get started!
 
