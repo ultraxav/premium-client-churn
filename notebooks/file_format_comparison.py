@@ -17,7 +17,7 @@
 # %% [markdown]
 # # Comparation between different file formats to persist data
 #
-# The objective of this notebook is to compare different file formats to persist the data for the project, the contendants are:
+# The objective of this notebook is to compare different file formats to persist the data for the project, the contestants  are:
 #
 # * Compressed CSV files
 # * CSV files
@@ -30,7 +30,7 @@
 # * Read/Write speeds
 # * Storage Space
 #
-# The inspiration for this notebook came from: For more details read it!.
+# The inspiration for this notebook came from: For more details read it!
 #
 # https://towardsdatascience.com/stop-persisting-pandas-data-frames-in-csvs-f369a6440af5
 #
