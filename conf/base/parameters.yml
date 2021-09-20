@@ -228,8 +228,7 @@ data_science:
     valid: 201911
     test: 201912
     leader: 202002
-  months_to_train:
-    - 12
+  months_to_train: 12
   cols_to_drop:
     - numero_de_cliente
     - foto_mes

@@ -4,13 +4,12 @@ import mlflow
 import optuna
 import optuna.integration.lightgbm as lgb_optim
 import pandas as pd
-
-# import warnings
+import warnings
 
 from kedro.framework.session import get_current_session
 from typing import Any, Dict
 
-# warnings.filterwarnings('ignore', category=UserWarning)
+warnings.filterwarnings('ignore', category=UserWarning)
 
 # nodes
 def split_data(data: pd.DataFrame, params: Dict[str, Any]) -> Dict[str, Any]:
@@ -26,24 +25,24 @@ def split_data(data: pd.DataFrame, params: Dict[str, Any]) -> Dict[str, Any]:
         splits: Dictionary of the indices for train, valid, test, and predict
     """
     # train
-    train_to = params.experiment_dates.train
+    train_to = params['experiment_dates']['train']
 
     start_from = pd.Series(sorted(data['foto_mes'].unique()))
 
     start_from = start_from[start_from <= train_to]
 
-    start_from = int(start_from[-params.months_to_train :][:1])
+    start_from = int(start_from[-params['months_to_train'] :][:1])
 
     train_dates = (data['foto_mes'] >= start_from) & (data['foto_mes'] <= train_to)
 
     # valid
-    valid_dates = data['foto_mes'] == params.experiment_dates.valid
+    valid_dates = data['foto_mes'] == params['experiment_dates']['valid']
 
     # test
-    test_dates = data['foto_mes'] == params.experiment_dates.test
+    test_dates = data['foto_mes'] == params['experiment_dates']['test']
 
     # predict
-    end_in = params.experiment_dates.leader
+    end_in = params['experiment_dates']['leader']
     predict_dates = data['foto_mes'] == end_in
 
     # dataset subset
@@ -79,24 +78,24 @@ def train_model(
     context = get_current_session().load_context().catalog
 
     Xt = lgb.Dataset(
-        data.drop(columns=[params.cols_to_drop])[splits.train_dates],
-        label=data[params.target_class][splits.train_dates],
+        data.drop(columns=(params['cols_to_drop']))[splits['train_dates']],
+        label=data[params['target_class']][splits['train_dates']],
     )
 
-    if params.optim.with_optim == True:
+    if params['optim']['with_optim'] == True:
         tuner = lgb_optim.LightGBMTunerCV(
-            {**params.model_fixed, **{'random_state': params.optim.seed}},
+            {**params['model_fixed'], **{'random_state': params['optim']['seed']}},
             Xt,
             stratified=False,
             shuffle=False,
             study=optuna.create_study(
-                study_name='premium-clien-churn', direction='maximize'
+                study_name='premium-client-churn', direction='maximize'
             ),
             show_progress_bar=False,
-            seed=params.optim.seed,
+            seed=params['optim']['seed'],
             return_cvbooster=True,
             verbose_eval=False,
-            optuna_seed=params.optim.seed,
+            optuna_seed=params['optim']['seed'],
         )
 
         tuner.run()
@@ -108,21 +107,21 @@ def train_model(
         train_params['n_estimators'] = tuner.get_best_booster().current_iteration()[0]
 
     else:
-        params.model_fixed.pop('early_stopping_rounds')
-        params.model_fixed.pop('metric')
-        params.model_fixed.pop('n_estimators')
+        params['model_fixed'].pop('early_stopping_rounds')
+        params['model_fixed'].pop('metric')
+        params['model_fixed'].pop('n_estimators')
 
         train_params = {
-            **params.model_fixed,
-            **params.model_optimized,
-            **{'random_state': params.optim.seed},
+            **params['model_fixed'],
+            **params['model_optimized'],
+            **{'random_state': params['optim']['seed']},
         }
 
         study = context.load('model_study')
 
     Xv = lgb.Dataset(
-        data.drop(columns=[params.cols_to_drop])[splits.test_dates],
-        label=data[params.target_class][splits.test_dates],
+        data.drop(columns=(params['cols_to_drop']))[splits['test_dates']],
+        label=data[params['target_class']][splits['test_dates']],
     )
 
     mlflow.lightgbm.autolog(silent=True)
