@@ -15,7 +15,7 @@ def create_pipeline(**kwargs):
             node(
                 train_model,
                 inputs=['train_data', 'splits', 'params:data_science'],
-                outputs=['trained_model', 'model_params'],
+                outputs=['trained_model', 'model_study', 'model_params'],
                 name='train_model_node',
             ),
             node(
