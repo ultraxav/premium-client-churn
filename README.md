@@ -2,7 +2,7 @@
 
 ## Overview
 
-The focus of this project is to develop a reference implementation example of how to train and register Machine Learning (ML) models intended for predicting client churn, all of this applying the latest machine learning techniques and good practices.
+The focus of this project is to develop a reference implementation example of how to train and register Machine Learning (ML) models intended for predicting client churn, all this applying the latest machine learning techniques and good practices.
 
 The data, which is not provided as part of this release and thus this implementation is only intended to serve as an example, is an extract of anonymized premium clients from a financial institution. Source: https://www.kaggle.com/c/uamds2020ldi1f2
 
@@ -12,7 +12,7 @@ Main libraries considered:
 
 * Kedro - https://kedro.readthedocs.io/en/0.17.4/
 
-> Kedro is an open-source Python framework for creating reproducible, maintainable and modular data science code. It borrows concepts from software engineering best-practice and applies them to machine-learning code; applied concepts include modularity, separation of concerns and versioning.
+> Kedro is an open-source Python framework for creating reproducible, maintainable, and modular data science code. It borrows concepts from software engineering best-practice and applies them to machine-learning code; applied concepts include modularity, separation of concerns and versioning.
 
 * scikit-learn - https://scikit-learn.org/0.24/
 
@@ -20,11 +20,11 @@ Main libraries considered:
 
 * MLFlow - https://www.mlflow.org/docs/latest/index.html
 
-> MLflow is an open source platform for managing the end-to-end machine learning lifecycle. It tackles four primary functions of Tracking experiments, Packaging ML code, Managing and deploying models, and Providing a central model store. For this project an implementation of MLFlow in Kedro - https://kedro-mlflow.readthedocs.io/en/0.7.4/
+> MLflow is an open-source platform for managing the end-to-end machine learning lifecycle. It tackles four primary functions of Tracking experiments, Packaging ML code, Managing and deploying models, and providing a central model store. For this project an implementation of MLFlow in Kedro - https://kedro-mlflow.readthedocs.io/en/0.7.4/
 
 * Kedro Viz - https://github.com/quantumblacklabs/kedro-viz
 
-> Kedro-Viz is an interactive development tool for building data science pipelines with Kedro, that features complete visualisation of a Kedro project and its pipelines.
+> Kedro-Viz is an interactive development tool for building data science pipelines with Kedro, that features complete visualization of a Kedro project and its pipelines.
 
 * Pre-Commit - https://pre-commit.com/
 
@@ -51,16 +51,16 @@ This implementation provides examples how to build pipelines for data load and s
     │
     ├── src                            <- Source code for use in this project.
     │   ├── premium_client_churn       <- Project source code.
-    │   │   └── pipelines              <- Pipelines for data processing, modeling and reporting.
+    │   │   └── pipelines              <- Pipelines for data processing, modeling, and reporting.
     │   └── requirements.in            <- The requirements file for reproducing the analysis environment.
     │
     └── README.md                      <- The top-level README for developers using this project.
 
 ## Now... Let's get started!
 
-In this section will be describes the steps to follow to set up your environment and excecute the project pipelines:
+In this section will be describes the steps to follow to set up your environment and execute the project pipelines:
 
-1. First of all we strongly recommend creating a virtual environment with Python >=3.6, <3.9:
+1. First of all, we strongly recommend creating a virtual environment with Python >=3.6, <3.9:
 
 ```
 python -m venv "name of your choosing"
@@ -72,7 +72,7 @@ python -m venv "name of your choosing"
 pip install kedro==0.17.4
 ```
 
-3. In the root of the project build the specific requirements for your excecution environment and install them:
+3. In the root of the project build the specific requirements for your execution environment and install them:
 
 ```
 kedro build-reqs
@@ -86,7 +86,7 @@ kedro install
 kedro mlflow init
 ```
 
-5. Installing pre-commit hook for code formating: 
+5. Installing pre-commit hook for code formatting: 
 
 ```
 pre-commit install

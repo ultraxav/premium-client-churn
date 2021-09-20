@@ -21,8 +21,8 @@
 #
 # This approach has some key qualities:
 # * A small number of features will reduce the hardware requirements.
-# * ... Also could improve generalization.
-# * ... could also induce overfiting, since the selected features are specific to their timeframe, might not be valid in another, for example: seasonality.
+# * ... Also, could improve generalization.
+# * ... could also induce overfitting, since the selected features are specific to their timeframe, might not be valid in another, for example: seasonality.
 
 # %%
 # libs
@@ -57,7 +57,7 @@ data.head()
 # %%
 # A simple LightGBM model is created to recursively test the features.
 # Data used: from 201901 to 201912 (one year).
-# Methodology: 5 fold Cross-validation
+# Methodology: 5-fold Cross-validation
 learner = LGBMClassifier()
 
 # Continue the search until there is only 1 feature left

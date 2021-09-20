@@ -7,7 +7,7 @@ from typing import Any, Dict
 # nodes
 def clean_data(data: pd.DataFrame, params: Dict[str, Any]) -> pd.DataFrame:
     """
-    Node for fixing broken data, transforming time columns into years and normalizing the target.
+    Node for fixing broken data, transforming time columns into years, and normalizing the target.
 
     Args:
         data: Raw data

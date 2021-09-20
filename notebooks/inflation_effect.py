@@ -16,12 +16,11 @@
 # %% [markdown]
 # # Inflation effect
 #
-# In this notebooks we will explore the effect of inflation and how it can distort quantities of features that are in argentinian pesos
+# In this notebook we will explore the effect of inflation and how it can distort quantities of features that are in Argentinian pesos
 #
 # To explore:
 # * How to estimate its effect.
-# * Are official inflation numbers fiable.
-# * Can we normalize the amount in other ways?
+# * Can we normalize the amounts?
 #
 #
 
@@ -98,7 +97,7 @@ plt.show()
 # %% [markdown]
 # ## Analysis
 #
-# Normalizing the payroll by the meadian seems to be the most effective, but how it was implemented the median did not take into account the effect of utilities and bonuses on regular months like June and December. this months will be handled separately.
+# Normalizing the payroll by the median seems to be the most effective, but how it was implemented the median did not consider the effect of utilities and bonuses on regular months like June and December. these months will be handled separately.
 
 # %%
 sueldos = data[['foto_mes', 'mpayroll']]
@@ -155,7 +154,7 @@ results['mpayroll_median_adjust'] = sueldos['mpayroll_median'].copy()
 sueldos
 
 # %% [markdown]
-# ## Payroll normalized by median taking into account utilities and bonuses
+# ## Payroll normalized by median considering utilities and bonuses.
 
 # %%
 plt.figure(figsize=(15, 7.5))

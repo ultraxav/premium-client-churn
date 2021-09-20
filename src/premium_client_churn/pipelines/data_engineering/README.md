@@ -2,7 +2,7 @@
 
 ## Overview
 
-This modular pipeline cleans the raw data from broken features, normalizes the target class and applies a simple feature engineering. The pipeline consists:
+This modular pipeline cleans the raw data from broken features, normalizes the target class and applies a simple feature engineering. The pipeline consists of:
 
 * `clean_data` node:
     *  Normalizes the target class.
