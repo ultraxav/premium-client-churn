@@ -230,9 +230,14 @@ data_science:
     leader: 202002
   months_to_train:
     - 12
+  cols_to_drop:
+    - numero_de_cliente
+    - foto_mes
+    - clase_ternaria
+  target_class: clase_ternaria
   optim:
-    with_optim: False
-    seed: 1234 # Reproducibility seed
+    with_optim: True
+    seed: 1234
   model_fixed:
     deterministic: True
     early_stopping_rounds: 550
@@ -243,3 +248,5 @@ data_science:
     n_estimators: 5000
     objective: binary
     verbose: -1
+  model_optimized:
+    cosito: 123
