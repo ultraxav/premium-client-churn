@@ -5,223 +5,222 @@ data_engineering:
   lag_qty: 3
   bool_to_cat:
     - active_quarter
+    - clase_ternaria
     - cliente_vip
     - internet
+    - Master_delinquency
+    - tcallcenter
+    - tcuentas
+    - thomebanking
     - tpaquete2
     - tpaquete3
-    - tcuentas
-    - tcallcenter
-    - thomebanking
-    - Master_delinquency
     - Visa_delinquency
-    - clase_ternaria
   day_to_year:
-    - Master_Fvencimiento
+    - Master_fechaalta
     - Master_Finiciomora
     - Master_fultimo_cierre
-    - Master_fechaalta
-    - Visa_Fvencimiento
+    - Master_Fvencimiento
+    - Visa_fechaalta
     - Visa_Finiciomora
     - Visa_fultimo_cierre
-    - Visa_fechaalta
+    - Visa_Fvencimiento
   cols_pesos:
-    - mrentabilidad
-    - mrentabilidad_annual
-    - mcomisiones
     - mactivos_margen
-    - mpasivos_margen
-    - mcuenta_corriente_adicional
-    - mcuenta_corriente
-    - mcaja_ahorro
-    - mcaja_ahorro_adicional
-    - mdescubierto_preacordado
-    - mcuentas_saldo
-    - mautoservicio
-    - mtarjeta_visa_consumo
-    - mtarjeta_master_consumo
-    - mprestamos_personales
-    - mprestamos_prendarios
-    - mprestamos_hipotecarios
-    - mplazo_fijo_pesos
-    - minversion1_pesos
-    - minversion2
-    - mpayroll
-    - mpayroll2
-    - mcuenta_debitos_automaticos
-    - mttarjeta_visa_debitos_automaticos
-    - mttarjeta_master_debitos_automaticos
-    - mpagodeservicios
-    - mpagomiscuentas
-    - mcajeros_propios_descuentos
-    - mtarjeta_visa_descuentos
-    - mtarjeta_master_descuentos
-    - mcomisiones_mantenimiento
-    - mcomisiones_otras
-    - mforex_buy
-    - mforex_sell
-    - mtransferencias_recibidas
-    - mtransferencias_emitidas
-    - mextraccion_autoservicio
-    - mcheques_depositados
-    - mcheques_emitidos
-    - mcheques_depositados_rechazados
-    - mcheques_emitidos_rechazados
+    - Master_madelantopesos
+    - Master_mconsumospesos
+    - Master_mconsumototal
+    - Master_mfinanciacion_limite
+    - Master_mlimitecompra
+    - Master_mpagado
+    - Master_mpagominimo
+    - Master_mpagospesos
+    - Master_msaldopesos
+    - Master_msaldototal
     - matm
     - matm_other
-    - Master_mfinanciacion_limite
-    - Master_msaldototal
-    - Master_msaldopesos
-    - Master_mconsumospesos
-    - Master_mlimitecompra
-    - Master_madelantopesos
-    - Master_mpagado
-    - Master_mpagospesos
-    - Master_mconsumototal
-    - Master_mpagominimo
-    - Visa_mfinanciacion_limite
-    - Visa_msaldototal
-    - Visa_msaldopesos
-    - Visa_mconsumospesos
-    - Visa_mlimitecompra
-    - Visa_madelantopesos
-    - Visa_mpagado
-    - Visa_mpagospesos
-    - Visa_mconsumototal
-    - Visa_mpagominimo
-  cols_to_lag:
-    - mrentabilidad
-    - mrentabilidad_annual
-    - mcomisiones
-    - mactivos_margen
-    - mpasivos_margen
-    - cproductos
-    - ccuenta_corriente
-    - mcuenta_corriente_adicional
-    - mcuenta_corriente
-    - ccaja_ahorro
+    - mautoservicio
     - mcaja_ahorro
     - mcaja_ahorro_adicional
-    - mcaja_ahorro_dolares
-    - mdescubierto_preacordado
+    - mcajeros_propios_descuentos
+    - mcheques_depositados
+    - mcheques_depositados_rechazados
+    - mcheques_emitidos
+    - mcheques_emitidos_rechazados
+    - mcomisiones
+    - mcomisiones_mantenimiento
+    - mcomisiones_otras
+    - mcuenta_corriente
+    - mcuenta_corriente_adicional
+    - mcuenta_debitos_automaticos
     - mcuentas_saldo
-    - ctarjeta_debito
-    - ctarjeta_debito_transacciones
-    - mautoservicio
-    - ctarjeta_visa
-    - ctarjeta_visa_transacciones
-    - mtarjeta_visa_consumo
-    - ctarjeta_master
-    - ctarjeta_master_transacciones
-    - mtarjeta_master_consumo
-    - cprestamos_personales
-    - mprestamos_personales
-    - cprestamos_prendarios
-    - mprestamos_prendarios
-    - cprestamos_hipotecarios
-    - mprestamos_hipotecarios
-    - cplazo_fijo
-    - mplazo_fijo_dolares
-    - mplazo_fijo_pesos
-    - cinversion1
+    - mdescubierto_preacordado
+    - mextraccion_autoservicio
+    - mforex_buy
+    - mforex_sell
     - minversion1_pesos
-    - minversion1_dolares
-    - cinversion2
     - minversion2
-    - cseguro_vida
-    - cseguro_auto
-    - cseguro_vivienda
-    - cseguro_accidentes_personales
-    - ccaja_seguridad
-    - cpayroll_trx
+    - mpagodeservicios
+    - mpagomiscuentas
+    - mpasivos_margen
     - mpayroll
     - mpayroll2
-    - cpayroll2_trx
-    - ccuenta_debitos_automaticos
-    - mcuenta_debitos_automaticos
-    - ctarjeta_visa_debitos_automaticos
-    - mttarjeta_visa_debitos_automaticos
-    - ctarjeta_master_debitos_automaticos
-    - mttarjeta_master_debitos_automaticos
-    - cpagodeservicios
-    - mpagodeservicios
-    - cpagomiscuentas
-    - mpagomiscuentas
-    - ccajeros_propios_descuentos
-    - mcajeros_propios_descuentos
-    - ctarjeta_visa_descuentos
-    - mtarjeta_visa_descuentos
-    - ctarjeta_master_descuentos
+    - mplazo_fijo_pesos
+    - mprestamos_hipotecarios
+    - mprestamos_personales
+    - mprestamos_prendarios
+    - mrentabilidad
+    - mrentabilidad_annual
+    - mtarjeta_master_consumo
     - mtarjeta_master_descuentos
-    - ccomisiones_mantenimiento
-    - mcomisiones_mantenimiento
-    - ccomisiones_otras
-    - mcomisiones_otras
-    - cforex
-    - cforex_buy
-    - mforex_buy
-    - cforex_sell
-    - mforex_sell
-    - ctransferencias_recibidas
-    - mtransferencias_recibidas
-    - ctransferencias_emitidas
+    - mtarjeta_visa_consumo
+    - mtarjeta_visa_descuentos
     - mtransferencias_emitidas
-    - cextraccion_autoservicio
-    - mextraccion_autoservicio
-    - ccheques_depositados
-    - mcheques_depositados
-    - ccheques_emitidos
-    - mcheques_emitidos
-    - ccheques_depositados_rechazados
-    - mcheques_depositados_rechazados
-    - ccheques_emitidos_rechazados
-    - mcheques_emitidos_rechazados
-    - ccallcenter_transacciones
-    - chomebanking_transacciones
-    - ccajas_transacciones
+    - mtransferencias_recibidas
+    - mttarjeta_master_debitos_automaticos
+    - mttarjeta_visa_debitos_automaticos
+    - Visa_madelantopesos
+    - Visa_mconsumospesos
+    - Visa_mconsumototal
+    - Visa_mfinanciacion_limite
+    - Visa_mlimitecompra
+    - Visa_mpagado
+    - Visa_mpagominimo
+    - Visa_mpagospesos
+    - Visa_msaldopesos
+    - Visa_msaldototal
+  cols_to_lag:
+    - catm_trx
+    - catm_trx_other
+    - ccaja_ahorro
+    - ccaja_seguridad
     - ccajas_consultas
     - ccajas_depositos
     - ccajas_extracciones
     - ccajas_otras
-    - catm_trx
-    - matm
-    - catm_trx_other
-    - matm_other
+    - ccajas_transacciones
+    - ccajeros_propios_descuentos
+    - ccallcenter_transacciones
+    - ccheques_depositados
+    - ccheques_depositados_rechazados
+    - ccheques_emitidos
+    - ccheques_emitidos_rechazados
+    - ccomisiones_mantenimiento
+    - ccomisiones_otras
+    - ccuenta_corriente
+    - ccuenta_debitos_automaticos
+    - cextraccion_autoservicio
+    - cforex
+    - cforex_buy
+    - cforex_sell
+    - chomebanking_transacciones
+    - cinversion1
+    - cinversion2
+    - cpagodeservicios
+    - cpagomiscuentas
+    - cpayroll_trx
+    - cpayroll2_trx
+    - cplazo_fijo
+    - cprestamos_hipotecarios
+    - cprestamos_personales
+    - cprestamos_prendarios
+    - cproductos
+    - cseguro_accidentes_personales
+    - cseguro_auto
+    - cseguro_vida
+    - cseguro_vivienda
+    - ctarjeta_debito
+    - ctarjeta_debito_transacciones
+    - ctarjeta_master
+    - ctarjeta_master_debitos_automaticos
+    - ctarjeta_master_descuentos
+    - ctarjeta_master_transacciones
+    - ctarjeta_visa
+    - ctarjeta_visa_debitos_automaticos
+    - ctarjeta_visa_descuentos
+    - ctarjeta_visa_transacciones
+    - ctransferencias_emitidas
+    - ctransferencias_recibidas
     - ctrx_quarter
-    - Master_status
-    - Master_mfinanciacion_limite
-    - Master_msaldototal
-    - Master_msaldopesos
-    - Master_msaldodolares
-    - Master_mconsumospesos
-    - Master_mconsumosdolares
-    - Master_mlimitecompra
-    - Master_madelantopesos
-    - Master_madelantodolares
-    - Master_mpagado
-    - Master_mpagospesos
-    - Master_mpagosdolares
-    - Master_mconsumototal
-    - Master_cconsumos
+    - mactivos_margen
     - Master_cadelantosefectivo
+    - Master_cconsumos
+    - Master_madelantodolares
+    - Master_madelantopesos
+    - Master_mconsumosdolares
+    - Master_mconsumospesos
+    - Master_mconsumototal
+    - Master_mfinanciacion_limite
+    - Master_mlimitecompra
+    - Master_mpagado
     - Master_mpagominimo
-    - Visa_status
-    - Visa_mfinanciacion_limite
-    - Visa_msaldototal
-    - Visa_msaldopesos
-    - Visa_msaldodolares
-    - Visa_mconsumospesos
-    - Visa_mconsumosdolares
-    - Visa_mlimitecompra
-    - Visa_madelantopesos
-    - Visa_madelantodolares
-    - Visa_mpagado
-    - Visa_mpagospesos
-    - Visa_mpagosdolares
-    - Visa_mconsumototal
-    - Visa_cconsumos
+    - Master_mpagosdolares
+    - Master_mpagospesos
+    - Master_msaldodolares
+    - Master_msaldopesos
+    - Master_msaldototal
+    - Master_status
+    - matm
+    - matm_other
+    - mautoservicio
+    - mcaja_ahorro
+    - mcaja_ahorro_adicional
+    - mcaja_ahorro_dolares
+    - mcajeros_propios_descuentos
+    - mcheques_depositados
+    - mcheques_depositados_rechazados
+    - mcheques_emitidos
+    - mcheques_emitidos_rechazados
+    - mcomisiones
+    - mcomisiones_mantenimiento
+    - mcomisiones_otras
+    - mcuenta_corriente
+    - mcuenta_corriente_adicional
+    - mcuenta_debitos_automaticos
+    - mcuentas_saldo
+    - mdescubierto_preacordado
+    - mextraccion_autoservicio
+    - mforex_buy
+    - mforex_sell
+    - minversion1_dolares
+    - minversion1_pesos
+    - minversion2
+    - mpagodeservicios
+    - mpagomiscuentas
+    - mpasivos_margen
+    - mpayroll
+    - mpayroll2
+    - mplazo_fijo_dolares
+    - mplazo_fijo_pesos
+    - mprestamos_hipotecarios
+    - mprestamos_personales
+    - mprestamos_prendarios
+    - mrentabilidad
+    - mrentabilidad_annual
+    - mtarjeta_master_consumo
+    - mtarjeta_master_descuentos
+    - mtarjeta_visa_consumo
+    - mtarjeta_visa_descuentos
+    - mtransferencias_emitidas
+    - mtransferencias_recibidas
+    - mttarjeta_master_debitos_automaticos
+    - mttarjeta_visa_debitos_automaticos
     - Visa_cadelantosefectivo
+    - Visa_cconsumos
+    - Visa_madelantodolares
+    - Visa_madelantopesos
+    - Visa_mconsumosdolares
+    - Visa_mconsumospesos
+    - Visa_mconsumototal
+    - Visa_mfinanciacion_limite
+    - Visa_mlimitecompra
+    - Visa_mpagado
     - Visa_mpagominimo
-
+    - Visa_mpagosdolares
+    - Visa_mpagospesos
+    - Visa_msaldodolares
+    - Visa_msaldopesos
+    - Visa_msaldototal
+    - Visa_status
 data_science:
   experiment_dates:
     train: 201909
@@ -230,9 +229,9 @@ data_science:
     leader: 202002
   months_to_train: 1
   cols_to_drop:
-    - numero_de_cliente
-    - foto_mes
     - clase_ternaria
+    - foto_mes
+    - numero_de_cliente
   target_class: clase_ternaria
   optim:
     with_optim: True
@@ -250,9 +249,9 @@ data_science:
   model_optimized:
     bagging_fraction: 0.6221504528746072
     bagging_freq: 4
-    feature_fraction: 0.4
-    lambda_l1: 0.0016166420446036664
-    lambda_l2: 8.12561926830844
-    min_child_samples: 100
-    n_estimators: 1041
-    num_leaves: 72
+    feature_fraction: 0.4
+    lambda_l1: 0.0016166420446036664
+    lambda_l2: 8.12561926830844
+    min_child_samples: 100
+    n_estimators: 1041
+    num_leaves: 72
