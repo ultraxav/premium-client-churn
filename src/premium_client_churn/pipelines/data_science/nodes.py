@@ -7,7 +7,7 @@ import pandas as pd
 import warnings
 
 from kedro.framework.session import get_current_session
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, roc_auc_score
 from typing import Any, Dict
 
 warnings.filterwarnings('ignore', category=UserWarning)
@@ -40,7 +40,7 @@ def profit_calculator(
 
 
 # nodes
-def split_data(data: pd.DataFrame, params: Dict[str, Any]) -> Dict[str, Any]:
+def split_data(data: pd.DataFrame, params: Dict[str, Any]) -> Any:
     """
     Subsets the dataset to the months needed for training and predicting
 
@@ -161,14 +161,23 @@ def train_model(
         verbose_eval=False,
     )
 
+    # train_score = study.best_trial.value
+
+    # train_summary = {
+    #     'sample_size': train_data.shape[0],
+    #     'date_from': str(train_data['expiry_date'].min()),
+    #     'date_to': str(train_data['expiry_date'].max()),
+    #     'auc': train_score,
+    # }
+
     return learner, study, train_params
 
 
 def predict(
     data: pd.DataFrame,
     splits: Dict[str, Any],
-    params: Dict[str, Any],
     trained_model: Any,
+    params: Dict[str, Any],
 ) -> pd.DataFrame:
     """
     Node for making predictions given a pre-trained model and a dataset.
@@ -183,14 +192,32 @@ def predict(
     Returns:
         model_predictions: Predictions ready to upload to the leaderboard
     """
-    ids = data['numero_de_cliente']
-    data = data.drop(columns=(params['cols_to_drop']))[splits['predict_dates']]
+    X_valid = data.drop(columns=(params['cols_to_drop']))[splits['valid_dates']]
+    X_test = data.drop(columns=(params['cols_to_drop']))[splits['test_dates']]
+    X_predict = data.drop(columns=(params['cols_to_drop']))[splits['predict_dates']]
+
+    y_valid = data['clase_ternaria'][splits['valid_dates']]
+    y_test = data['clase_ternaria'][splits['test_dates']]
+    id_predict = data['numero_de_cliente'][splits['predict_dates']]
+
+    preds_valid = trained_model.predict(X_valid)
+    preds_test = trained_model.predict(X_test)
+    preds_predict = trained_model.predict(X_predict)
+
+    score_valid = roc_auc_score(y_valid, preds_valid)
+    score_test = roc_auc_score(y_test, preds_test)
 
     probs = trained_model.predict(data)
 
     model_predictions = {
-        'Id': ids,
-        'Predicted': preds,
+        'Id': id_predict,
+        'Predicted': preds_predict,
     }
 
-    return model_predictions
+    model_metrics = {
+        'score_valid': score_valid,
+        'score_test': score_test,
+        'pcutoff': 0,
+    }
+
+    return model_predictions, model_metrics

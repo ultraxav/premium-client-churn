@@ -20,7 +20,7 @@ def create_pipeline(**kwargs):
             ),
             node(
                 predict,
-                inputs=['train_data', 'params:data_science', 'trained_model'],
+                inputs=['train_data', 'splits', 'trained_model', 'params:data_science'],
                 outputs='predictions',
                 name='predict_node',
             ),

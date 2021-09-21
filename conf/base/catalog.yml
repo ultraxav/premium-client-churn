@@ -22,7 +22,3 @@ trained_model:
 trained_study:
   type: pickle.PickleDataSet
   filepath: data/06_models/trained_study.pkl
-
-model_params:
-  type: kedro.extras.datasets.json.JSONDataSet
-  filepath: data/06_models/model_params.json
