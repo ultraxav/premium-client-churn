@@ -7,13 +7,14 @@ import pandas as pd
 import warnings
 
 from kedro.framework.session import get_current_session
+from sklearn.metrics import confusion_matrix
 from typing import Any, Dict
 
 warnings.filterwarnings('ignore', category=UserWarning)
 
 # support funcs
 def profit_calculator(
-    y_true: pd.Series, y_pred: pd.Series, TP_gain: int, TF_gain: int, pcut: float
+    y_true: pd.Series, y_pred: pd.Series, TP_gain: int, FP_gain: int, pcut: float
 ) -> int:
     """
     Returns the estimated profit of the incetive campaing for the financial institution
@@ -21,14 +22,19 @@ def profit_calculator(
     Args:
         y_true: Ture labels
         y_pred: Probability estimate
-        TP_gain: Net profit of sending a incentive and keeping the client
-        TF_gain: Cost of sending an incentive and losing a client
-        pcut: Data
+        TP_gain: Net profit of sending a incentive and keeping a client
+        FP_gain: Cost of sending an incentive and losing a client
+        pcut: Cutoff probability
 
     Returns:
         profit: Estimated profit
     """
-    profit = 0
+
+    y_pred = y_pred.apply(lambda x: int(x > pcut))
+
+    _, fp, _, tp = confusion_matrix(y_true, y_pred).ravel()
+
+    profit = TP_gain * tp + FP_gain * fp
 
     return profit
 
