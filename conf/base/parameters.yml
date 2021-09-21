@@ -2,7 +2,9 @@
 
 data_engineering:
   target_class: BAJA+2
+  
   lag_qty: 3
+  
   bool_to_cat:
     - active_quarter
     - clase_ternaria
@@ -15,6 +17,7 @@ data_engineering:
     - tpaquete2
     - tpaquete3
     - Visa_delinquency
+  
   day_to_year:
     - Master_fechaalta
     - Master_Finiciomora
@@ -24,6 +27,7 @@ data_engineering:
     - Visa_Finiciomora
     - Visa_fultimo_cierre
     - Visa_Fvencimiento
+  
   cols_pesos:
     - mactivos_margen
     - Master_madelantopesos
@@ -88,6 +92,7 @@ data_engineering:
     - Visa_mpagospesos
     - Visa_msaldopesos
     - Visa_msaldototal
+  
   cols_to_lag:
     - catm_trx
     - catm_trx_other
@@ -227,15 +232,20 @@ data_science:
     valid: 201911
     test: 201912
     leader: 202002
+  
   months_to_train: 1
+  
   cols_to_drop:
     - clase_ternaria
     - foto_mes
     - numero_de_cliente
+  
   target_class: clase_ternaria
+  
   optim:
-    with_optim: True
+    with_optim: False
     seed: 1234
+  
   model_fixed:
     deterministic: True
     early_stopping_rounds: 550
@@ -246,6 +256,7 @@ data_science:
     n_estimators: 5000
     objective: binary
     verbose: -1
+  
   model_optimized:
     bagging_fraction: 0.6221504528746072
     bagging_freq: 4
@@ -255,3 +266,7 @@ data_science:
     min_child_samples: 100
     n_estimators: 1041
     num_leaves: 72
+  
+  pcutoff:
+    TP_gain: 29250
+    FP_gain: -750
