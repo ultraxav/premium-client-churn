@@ -11,6 +11,28 @@ from typing import Any, Dict
 
 warnings.filterwarnings('ignore', category=UserWarning)
 
+# support funcs
+def profit_calculator(
+    y_true: pd.Series, y_pred: pd.Series, TP_gain: int, TF_gain: int, pcut: float
+) -> int:
+    """
+    Returns the estimated profit of the incetive campaing for the financial institution
+
+    Args:
+        y_true: Ture labels
+        y_pred: Probability estimate
+        TP_gain: Net profit of sending a incentive and keeping the client
+        TF_gain: Cost of sending an incentive and losing a client
+        pcut: Data
+
+    Returns:
+        profit: Estimated profit
+    """
+    profit = 0
+
+    return profit
+
+
 # nodes
 def split_data(data: pd.DataFrame, params: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -138,6 +160,7 @@ def train_model(
 
 def predict(
     data: pd.DataFrame,
+    splits: Dict[str, Any],
     params: Dict[str, Any],
     trained_model: Any,
 ) -> pd.DataFrame:
@@ -147,22 +170,21 @@ def predict(
 
     Args:
         data: Data to make predictions
+        splits: Dictionary of the indices for train, valid, test, and predict
         params: Month to predict
         trained_model: Trained Model
 
     Returns:
         model_predictions: Predictions ready to upload to the leaderboard
     """
-    data = data.drop(columns='clase_ternaria')
-    data = data[data['foto_mes'] == 201904]
+    ids = data['numero_de_cliente']
+    data = data.drop(columns=(params['cols_to_drop']))[splits['predict_dates']]
 
-    probs = trained_model.predict(data.drop(columns=['numero_de_cliente', 'foto_mes']))
+    probs = trained_model.predict(data)
 
     model_predictions = {
-        'Id': data['numero_de_cliente'],
-        'Predicted': trained_model.predict(
-            data.drop(columns=['numero_de_cliente', 'foto_mes'])
-        ),
+        'Id': ids,
+        'Predicted': preds,
     }
 
     return model_predictions
