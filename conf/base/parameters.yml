@@ -228,7 +228,7 @@ data_science:
     valid: 201911
     test: 201912
     leader: 202002
-  months_to_train: 12
+  months_to_train: 1
   cols_to_drop:
     - numero_de_cliente
     - foto_mes
@@ -248,4 +248,11 @@ data_science:
     objective: binary
     verbose: -1
   model_optimized:
-    cosito: 123
+    bagging_fraction: 0.6221504528746072
+    bagging_freq: 4
+    feature_fraction: 0.4
+    lambda_l1: 0.0016166420446036664
+    lambda_l2: 8.12561926830844
+    min_child_samples: 100
+    n_estimators: 1041
+    num_leaves: 72
