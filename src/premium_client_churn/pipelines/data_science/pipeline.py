@@ -9,18 +9,18 @@ def create_pipeline(**kwargs):
             node(
                 split_data,
                 inputs=['feature_data', 'params:data_science'],
-                outputs=['train_data', 'splits'],
+                outputs=['train_data', 'valid_data', 'test_data', 'leader_data'],
                 name='split_data_node',
             ),
             node(
                 train_model,
-                inputs=['train_data', 'splits', 'params:data_science'],
+                inputs=['train_data', 'valid_data', 'test_data', 'params:data_science'],
                 outputs=['trained_model', 'model_study', 'model_params'],
                 name='train_model_node',
             ),
             node(
                 predict,
-                inputs=['train_data', 'splits', 'trained_model', 'params:data_science'],
+                inputs=['leader_data', 'trained_model', 'params:data_science'],
                 outputs='predictions',
                 name='predict_node',
             ),

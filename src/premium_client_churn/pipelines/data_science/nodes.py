@@ -63,32 +63,30 @@ def split_data(data: pd.DataFrame, params: Dict[str, Any]) -> Any:
 
     train_dates = (data['foto_mes'] >= start_from) & (data['foto_mes'] <= train_to)
 
+    train_data = data[train_dates]
+
     # valid
     valid_dates = data['foto_mes'] == params['experiment_dates']['valid']
+
+    valid_data = data[valid_dates]
 
     # test
     test_dates = data['foto_mes'] == params['experiment_dates']['test']
 
-    # predict
-    end_in = params['experiment_dates']['leader']
-    predict_dates = data['foto_mes'] == end_in
+    test_data = data[test_dates]
 
-    # dataset subset
-    data = data[(data['foto_mes'] >= start_from) & (data['foto_mes'] <= end_in)]
+    # leaderboard
+    leader_dates = data['foto_mes'] == params['experiment_dates']['leader']
 
-    splits = {
-        'train_dates': train_dates,
-        'valid_dates': valid_dates,
-        'test_dates': test_dates,
-        'predict_dates': predict_dates,
-    }
+    leader_data = data[leader_dates]
 
-    return data, splits
+    return train_data, valid_data, test_data, leader_data
 
 
 def train_model(
-    data: pd.DataFrame,
-    splits: Dict[str, Any],
+    train_data: pd.DataFrame,
+    valid_data: pd.DataFrame,
+    test_data: pd.DataFrame,
     params: Dict[str, Any],
 ) -> Any:
     """
@@ -194,15 +192,15 @@ def predict(
     """
     X_valid = data.drop(columns=(params['cols_to_drop']))[splits['valid_dates']]
     X_test = data.drop(columns=(params['cols_to_drop']))[splits['test_dates']]
-    X_predict = data.drop(columns=(params['cols_to_drop']))[splits['predict_dates']]
+    X_leader = data.drop(columns=(params['cols_to_drop']))[splits['predict_dates']]
 
     y_valid = data['clase_ternaria'][splits['valid_dates']]
     y_test = data['clase_ternaria'][splits['test_dates']]
-    id_predict = data['numero_de_cliente'][splits['predict_dates']]
+    id_leader = data['numero_de_cliente'][splits['predict_dates']]
 
     preds_valid = trained_model.predict(X_valid)
     preds_test = trained_model.predict(X_test)
-    preds_predict = trained_model.predict(X_predict)
+    preds_leader = trained_model.predict(X_leader)
 
     score_valid = roc_auc_score(y_valid, preds_valid)
     score_test = roc_auc_score(y_test, preds_test)
@@ -210,8 +208,8 @@ def predict(
     probs = trained_model.predict(data)
 
     model_predictions = {
-        'Id': id_predict,
-        'Predicted': preds_predict,
+        'Id': id_leader,
+        'Predicted': preds_leader,
     }
 
     model_metrics = {
