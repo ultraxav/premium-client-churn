@@ -7,7 +7,7 @@ import pandas as pd
 import warnings
 
 from kedro.framework.session import get_current_session
-from sklearn.metrics import confusion_matrix, roc_auc_score
+from sklearn.metrics import confusion_matrix
 from typing import Any, Dict
 
 warnings.filterwarnings('ignore', category=UserWarning)
@@ -55,13 +55,13 @@ def split_data(data: pd.DataFrame, params: Dict[str, Any]) -> Any:
     # train
     train_to = params['experiment_dates']['train']
 
-    start_from = pd.Series(sorted(data['foto_mes'].unique()))
+    train_from = pd.Series(sorted(data['foto_mes'].unique()))
 
-    start_from = start_from[start_from <= train_to]
+    train_from = train_from[train_from <= train_to]
 
-    start_from = int(start_from[-params['months_to_train'] :][:1])
+    train_from = int(train_from[-params['months_to_train'] :][:1])
 
-    train_dates = (data['foto_mes'] >= start_from) & (data['foto_mes'] <= train_to)
+    train_dates = (data['foto_mes'] >= train_from) & (data['foto_mes'] <= train_to)
 
     train_data = data[train_dates]
 
@@ -86,7 +86,6 @@ def split_data(data: pd.DataFrame, params: Dict[str, Any]) -> Any:
 def train_model(
     train_data: pd.DataFrame,
     valid_data: pd.DataFrame,
-    test_data: pd.DataFrame,
     params: Dict[str, Any],
 ) -> Any:
     """
@@ -104,8 +103,8 @@ def train_model(
     context = get_current_session().load_context().catalog
 
     Xt = lgb.Dataset(
-        data.drop(columns=(params['cols_to_drop']))[splits['train_dates']],
-        label=data[params['target_class']][splits['train_dates']],
+        train_data.drop(columns=(params['cols_to_drop'])),
+        label=train_data[params['target_class']],
     )
 
     if params['optim']['with_optim'] == True:
@@ -146,8 +145,8 @@ def train_model(
         study = context.load('model_study')
 
     Xv = lgb.Dataset(
-        data.drop(columns=(params['cols_to_drop']))[splits['test_dates']],
-        label=data[params['target_class']][splits['test_dates']],
+        valid_data.drop(columns=(params['cols_to_drop'])),
+        label=valid_data[params['target_class']],
     )
 
     mlflow.lightgbm.autolog(silent=True)
@@ -159,21 +158,13 @@ def train_model(
         verbose_eval=False,
     )
 
-    # train_score = study.best_trial.value
-
-    # train_summary = {
-    #     'sample_size': train_data.shape[0],
-    #     'date_from': str(train_data['expiry_date'].min()),
-    #     'date_to': str(train_data['expiry_date'].max()),
-    #     'auc': train_score,
-    # }
-
     return learner, study, train_params
 
 
 def predict(
-    data: pd.DataFrame,
-    splits: Dict[str, Any],
+    valid_data: pd.DataFrame,
+    test_data: pd.DataFrame,
+    leader_data: pd.DataFrame,
     trained_model: Any,
     params: Dict[str, Any],
 ) -> pd.DataFrame:
@@ -190,32 +181,47 @@ def predict(
     Returns:
         model_predictions: Predictions ready to upload to the leaderboard
     """
-    X_valid = data.drop(columns=(params['cols_to_drop']))[splits['valid_dates']]
-    X_test = data.drop(columns=(params['cols_to_drop']))[splits['test_dates']]
-    X_leader = data.drop(columns=(params['cols_to_drop']))[splits['predict_dates']]
+    TP_gain = params['pcutoff']['TP_gain']
+    FP_gain = params['pcutoff']['FP_gain']
 
-    y_valid = data['clase_ternaria'][splits['valid_dates']]
-    y_test = data['clase_ternaria'][splits['test_dates']]
-    id_leader = data['numero_de_cliente'][splits['predict_dates']]
+    X_valid = valid_data.drop(columns=(params['cols_to_drop']))
+    X_test = test_data.drop(columns=(params['cols_to_drop']))
+    X_leader = leader_data.drop(columns=(params['cols_to_drop']))
+
+    y_valid = valid_data['clase_ternaria']
+    y_test = test_data['clase_ternaria']
+    id_leader = leader_data['numero_de_cliente']
 
     preds_valid = trained_model.predict(X_valid)
     preds_test = trained_model.predict(X_test)
     preds_leader = trained_model.predict(X_leader)
 
-    score_valid = roc_auc_score(y_valid, preds_valid)
-    score_test = roc_auc_score(y_test, preds_test)
+    best_valid = 0
+    best_test = 0
+    best_profit = 0
+    best_pcut = None
+    for i in range(1, 10, 1):
+        pcut = i / 10
+        profit_valid = profit_calculator(y_valid, preds_valid, TP_gain, FP_gain, pcut)
+        profit_test = profit_calculator(y_test, preds_test, TP_gain, FP_gain, pcut)
 
-    probs = trained_model.predict(data)
+        if profit_valid + profit_test > best_profit:
+            best_valid = profit_valid
+            best_test = profit_test
+            best_profit = profit_valid + profit_test
+            best_pcut = pcut
+
+    preds_leader = preds_leader.apply(lambda x: int(x > best_pcut))
 
     model_predictions = {
         'Id': id_leader,
         'Predicted': preds_leader,
     }
 
-    model_metrics = {
-        'score_valid': score_valid,
-        'score_test': score_test,
-        'pcutoff': 0,
+    predict_metrics = {
+        'gain_valid': best_valid,
+        'gain_test': best_test,
+        'pcutoff': best_pcut,
     }
 
-    return model_predictions, model_metrics
+    return model_predictions, predict_metrics
