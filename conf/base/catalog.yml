@@ -22,3 +22,11 @@ trained_model:
 trained_study:
   type: pickle.PickleDataSet
   filepath: data/06_models/trained_study.pkl
+
+model_predictions:
+  type: pandas.CSVDataSet
+  filepath: data/07_model_output/model_predictions.csv
+
+report:
+  type: kedro.extras.datasets.json.JSONDataSet
+  filepath: data/08_reporting/model_report.json
