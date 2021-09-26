@@ -60,7 +60,7 @@ This implementation provides examples how to build pipelines for data load and s
 
 In this section will be describes the steps to follow to set up your environment and execute the project pipelines:
 
-1. First of all, we strongly recommend creating a virtual environment with Python >=3.6, <3.9:
+1. First of all, we strongly recommend creating a virtual environment with Python >=3.6, <3.9 (Version used 3.8.10):
 
 ```
 python -m venv "name of your choosing"

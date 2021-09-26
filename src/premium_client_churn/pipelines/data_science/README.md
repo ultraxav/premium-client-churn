@@ -1,58 +1,72 @@
 # Data Science pipeline
 
-> *Note:* This `README.md` was generated using `Kedro 0.17.4` for illustration purposes. Please modify it according to your pipeline structure and contents.
-
 ## Overview
 
-This modular pipeline:
-1. trains a simple multi-class logistic regression model (`train_model` node)
-2. makes predictions given a trained model from (1) and a test set (`predict` node)
-3. reports the model accuracy on a test set (`report_accuracy` node)
+This modular pipeline splits the data into 4 datasets (train, validation, test, and leaderboard). Then trains a model, and finally make predictions. The pipeline consists of:
 
+* `split_data` node:
+    * Splits the main dataset into train, validation, test, and leaderboard datasets.
+
+* `train_model` node:
+    * Finds the best hyperparameters using the training data with 5-fold cross-validation.
+    * Trains a final model with all the training data and the hyperparameters found.
+
+* `predict` node:
+    * Finds the best cutoff probability and makes predictions for all the datasets.
+    * Generates a CSV file ready to upload to kaggle.
 
 ## Pipeline inputs
 
-### `example_train_x`
+### `feature_data`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing train set features |
+| Type | Description |
+| ---- | ----------- |
+| `pandas.DataFrame` | DataFrame containing train set features |
 
-### `example_train_y`
+### `params:data_science`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing train set one-hot encoded target variable |
-
-### `example_test_x`
-
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing test set features |
-
-### `example_test_y`
-
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing test set one-hot encoded target variable |
-
-### `parameters`
-
-|      |                    |
-| ---- | ------------------ |
-| Type | `dict` |
-| Description | Project parameter dictionary that must contain the following keys: `example_num_train_iter` (number of model training iterations), `example_learning_rate` (learning rate for gradient descent) |
-
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| experiment_dates | `dict` | Dates to split the data |
+| months_to_train | `int` | how many months are used for training |
+| cols_to_drop | `list` | Columns to drop in training data |
+| target_class | `string` | Target class |
+| optim | `dict` | Activates the hyperparameter search |
+| model_fixed | `dict` | Fixed parameters for the model |
+| model_optimized | `dict` | Optimized model hyperparameter |
+| pcutoff | `dict` | Cutoff probability |
 
 ## Pipeline outputs
 
-### `example_model`
+### `model_predictions`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `numpy.ndarray` |
-| Description | Example logistic regression model |
+| Type | Description |
+| ---- | ----------- |
+| `pandas.DataFrame` | DataFrame containing predictions |
+
+### `model_metrics`
+
+| Type | Description |
+| ---- | ----------- |
+| `dict` | Dictionary containing various model metrics |
+
+### `model_study`
+
+| Type | Description |
+| ---- | ----------- |
+| `optuna.study` | Summary of the hyperparameter search |
+
+### `model_params`
+
+| Type | Description |
+| ---- | ----------- |
+| `dict` | Final model parameters |
+
+### `DataFrames`
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| train_data | `pandas.DataFrame` | Train dataset |
+| valid_data | `pandas.DataFrame` | Validation dataset |
+| test_data | `pandas.DataFrame` | Test dataset |
+| leader_data | `pandas.DataFrame` | Leaderboard dataset |
