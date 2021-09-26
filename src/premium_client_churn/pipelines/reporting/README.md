@@ -1,58 +1,50 @@
 # Reporting pipeline
 
-> *Note:* This `README.md` was generated using `Kedro 0.17.4` for illustration purposes. Please modify it according to your pipeline structure and contents.
-
 ## Overview
 
-This modular pipeline:
-1. trains a simple multi-class logistic regression model (`train_model` node)
-2. makes predictions given a trained model from (1) and a test set (`predict` node)
-3. reports the model accuracy on a test set (`report_accuracy` node)
+This modular pipeline collects the data generated from the execution of the training pipeline and elaborates a report.
 
 
 ## Pipeline inputs
 
-### `example_train_x`
+### `DataFrames`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing train set features |
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| train_data | `pandas.DataFrame` | Train dataset |
+| valid_data | `pandas.DataFrame` | Validation dataset |
+| test_data | `pandas.DataFrame` | Test dataset |
+| leader_data | `pandas.DataFrame` | Leaderboard dataset |
 
-### `example_train_y`
+### `model_metrics`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing train set one-hot encoded target variable |
+| Type | Description |
+| ---- | ----------- |
+| `dict` | Dictionary containing various model metrics |
 
-### `example_test_x`
+### `trained_model`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing test set features |
+| Type | Description |
+| ---- | ----------- |
+| `booster` | Trained model |
 
-### `example_test_y`
+### `model_study`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `pandas.DataFrame` |
-| Description | DataFrame containing test set one-hot encoded target variable |
+| Type | Description |
+| ---- | ----------- |
+| `optuna.study` | Summary of the hyperparameter search |
 
-### `parameters`
+### `model_params`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `dict` |
-| Description | Project parameter dictionary that must contain the following keys: `example_num_train_iter` (number of model training iterations), `example_learning_rate` (learning rate for gradient descent) |
+| Type | Description |
+| ---- | ----------- |
+| `dict` | Final model parameters |
 
 
 ## Pipeline outputs
 
-### `example_model`
+### `model_metrics_report`
 
-|      |                    |
-| ---- | ------------------ |
-| Type | `numpy.ndarray` |
-| Description | Example logistic regression model |
+| Type | Description |
+| ---- | ----------- |
+| `json` | Model final report |

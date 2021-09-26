@@ -9,10 +9,14 @@ def create_pipeline(**kwargs):
             node(
                 reporting,
                 inputs=[
+                    'train_data',
+                    'valid_data',
+                    'test_data',
+                    'leader_data',
+                    'model_metrics',
                     'trained_model',
                     'model_study',
                     'model_params',
-                    'params:split_data',
                 ],
                 outputs='model_metrics_report',
                 name='model_reporting_node',

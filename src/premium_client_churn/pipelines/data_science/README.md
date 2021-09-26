@@ -44,6 +44,12 @@ This modular pipeline splits the data into 4 datasets (train, validation, test, 
 | ---- | ----------- |
 | `pandas.DataFrame` | DataFrame containing predictions |
 
+### `trained_model`
+
+| Type | Description |
+| ---- | ----------- |
+| `booster` | Trained model |
+
 ### `model_metrics`
 
 | Type | Description |

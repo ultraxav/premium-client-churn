@@ -50,24 +50,11 @@ def register_pipelines() -> Dict[str, Pipeline]:
     data_science_pipeline = ds.create_pipeline()
     reporting_pipeline = rp.create_pipeline()
 
-    # ml_pipeline = (
-    #     data_engineering_pipeline + data_science_pipeline + reporting_pipeline
-    # )
-
-    # inference_pipeline = ml_pipeline.only_nodes_with_tags('inference')
-
-    # training_pipeline = pipeline_ml_factory(
-    #     training=ml_pipeline.only_nodes_with_tags('training'),
-    #     inference=inference_pipeline,
-    #     input_name='feat_data',
-    #     model_name='model',
-    #     model_signature=None,
-    # )
+    ml_pipeline = data_engineering_pipeline + data_science_pipeline + reporting_pipeline
 
     return {
         'data_engineering': data_engineering_pipeline,
         'data_science': data_science_pipeline,
         'reporting': reporting_pipeline,
-        # 'training': training_pipeline,
-        # 'inference': inference_pipeline,
+        'training': ml_pipeline,
     }

@@ -4,7 +4,7 @@ import git
 import mlflow
 import pandas as pd
 
-from src.premium_client_churn.__init__ import __version__
+from premium_client_churn.__init__ import __version__
 from typing import Dict, Any
 
 
