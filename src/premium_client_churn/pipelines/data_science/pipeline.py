@@ -27,7 +27,7 @@ def create_pipeline(**kwargs):
                     'trained_model',
                     'params:data_science',
                 ],
-                outputs=['model_predictions', 'predict_metrics'],
+                outputs=['model_predictions', 'model_metrics'],
                 name='predict_node',
             ),
         ]

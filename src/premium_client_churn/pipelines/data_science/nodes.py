@@ -7,7 +7,7 @@ import pandas as pd
 import warnings
 
 from kedro.framework.session import get_current_session
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, roc_auc_score
 from typing import Any, Dict
 
 warnings.filterwarnings('ignore', category=UserWarning)
@@ -211,17 +211,21 @@ def predict(
             best_profit = profit_valid + profit_test
             best_pcut = pcut
 
-    preds_leader = preds_leader.apply(lambda x: int(x > best_pcut))
+    preds_leader = pd.Series(preds_leader.apply(lambda x: int(x > best_pcut)))
+
+    preds_leader = preds_leader.replace({0: 'FALSE', 1: 'TRUE'})
 
     model_predictions = {
         'Id': id_leader,
         'Predicted': preds_leader,
     }
 
-    predict_metrics = {
+    model_metrics = {
         'gain_valid': best_valid,
+        'auc_valid': roc_auc_score(y_valid, preds_valid),
         'gain_test': best_test,
+        'auc_test': roc_auc_score(y_test, preds_test),
         'pcutoff': best_pcut,
     }
 
-    return model_predictions, predict_metrics
+    return model_predictions, model_metrics
