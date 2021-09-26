@@ -36,8 +36,7 @@ from kedro.pipeline import Pipeline
 # pipelines
 from premium_client_churn.pipelines import data_engineering as de
 from premium_client_churn.pipelines import data_science as ds
-
-# from premium_client_churn.pipelines import reporting as rp
+from premium_client_churn.pipelines import reporting as rp
 
 
 def register_pipelines() -> Dict[str, Pipeline]:
@@ -49,7 +48,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
 
     data_engineering_pipeline = de.create_pipeline()
     data_science_pipeline = ds.create_pipeline()
-    # reporting_pipeline = rp.create_pipeline()
+    reporting_pipeline = rp.create_pipeline()
 
     # ml_pipeline = (
     #     data_engineering_pipeline + data_science_pipeline + reporting_pipeline
@@ -68,7 +67,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
     return {
         'data_engineering': data_engineering_pipeline,
         'data_science': data_science_pipeline,
-        # 'reporting': reporting_pipeline,
+        'reporting': reporting_pipeline,
         # 'training': training_pipeline,
         # 'inference': inference_pipeline,
     }
