@@ -30,7 +30,7 @@ def profit_calculator(
         profit: Estimated profit
     """
 
-    y_pred = y_pred.apply(lambda x: int(x > pcut))
+    y_pred = pd.Series(y_pred).apply(lambda x: int(x > pcut))
 
     _, fp, _, tp = confusion_matrix(y_true, y_pred).ravel()
 
@@ -167,7 +167,7 @@ def predict(
     leader_data: pd.DataFrame,
     trained_model: Any,
     params: Dict[str, Any],
-) -> pd.DataFrame:
+) -> Any:
     """
     Node for making predictions given a pre-trained model and a dataset.
     Also calculates the optimal cutoff probability to return the final predicitons.
@@ -190,7 +190,7 @@ def predict(
 
     y_valid = valid_data['clase_ternaria']
     y_test = test_data['clase_ternaria']
-    id_leader = leader_data['numero_de_cliente']
+    id_leader = leader_data['numero_de_cliente'].reset_index(drop=True).astype(int)
 
     preds_valid = trained_model.predict(X_valid)
     preds_test = trained_model.predict(X_test)
@@ -211,7 +211,7 @@ def predict(
             best_profit = profit_valid + profit_test
             best_pcut = pcut
 
-    preds_leader = pd.Series(preds_leader.apply(lambda x: int(x > best_pcut)))
+    preds_leader = pd.Series(preds_leader).apply(lambda x: int(x > best_pcut))
 
     preds_leader = preds_leader.replace({0: 'FALSE', 1: 'TRUE'})
 
@@ -220,10 +220,12 @@ def predict(
         'Predicted': preds_leader,
     }
 
+    model_predictions = pd.DataFrame(model_predictions)
+
     model_metrics = {
-        'gain_valid': best_valid,
+        'gain_valid': int(best_valid),
         'auc_valid': roc_auc_score(y_valid, preds_valid),
-        'gain_test': best_test,
+        'gain_test': int(best_test),
         'auc_test': roc_auc_score(y_test, preds_test),
         'pcutoff': best_pcut,
     }
