@@ -35,7 +35,7 @@ def reporting(
         'sample_size': train_data.shape[0],
         'date_from': str(train_data['foto_mes'].min()),
         'date_to': str(train_data['foto_mes'].max()),
-        'auc': model_study.best_value(),
+        'auc': model_study.best_trial.value,
     }
 
     valid_summary = {
