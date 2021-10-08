@@ -244,7 +244,7 @@ data_science:
   target_class: clase_ternaria
   
   optim:
-    with_optim: False
+    with_optim: True
     seed: 1234
   
   model_fixed:
